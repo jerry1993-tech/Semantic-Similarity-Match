@@ -1,0 +1,1 @@
+{"do_lower_case": true, "unk_token": "[UNK]", "sep_token": "[SEP]", "pad_token": "[PAD]", "cls_token": "[CLS]", "mask_token": "[MASK]", "tokenize_chinese_chars": true, "strip_accents": null, "special_tokens_map_file": "../senbert/sbert_model_path/hfl_rbt4/special_tokens_map.json", "name_or_path": "../senbert/sbert_model_path/hfl_rbt4", "tokenizer_class": "BertTokenizer"}

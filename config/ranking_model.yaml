@@ -1,0 +1,76 @@
+# task model params.
+learning_rate: 0.0002
+teacher_learning_rate: 0.00003
+min_learning_rate: 0.000001
+lr_decay_epoch: 3
+warmup_epochs: 5
+lr_decay_rate: 0.85
+
+dropout_keep_prob: 0.9
+hidden_size: 512
+
+max_sequence_length: 40
+
+# pre-train model type.
+use_bert: True
+bert_type: bert
+
+bert_path: chinese_rbt4_L-4_H-768_A-12
+bert_layer_type: rbt4
+
+use_distill: True
+teacher_bert_path: chinese_rbt12_L-12_H-768_A-12  # MacBert-base
+teacher_bert_layer_type: rbt12
+
+alpha: 0.2
+temperature: 10
+
+# fine-tune params set. > fixed: line 24--line 62
+
+fine_tune: True
+
+pre_train_trainable: True
+
+similarity_trainable: True
+
+# params slim opt.
+use_slimmed_albert: False
+
+# not use.
+crf:
+  use_crf: False
+  use_mcrf: False
+
+# input & output.
+
+inputs: ["text"]
+targets: ["similarity"]
+
+num_classes: 2
+
+# data feed handle.
+feeds:
+  text:
+    data_type: bert
+    data:
+      path: ["{type}/{type}.seq1.in", "{type}/{type}.seq2.in"]
+
+  similarity:
+    data_type: ["label", "binary"]
+    data:
+      path: "{type}/{type}.label"
+    vocab:
+      path: "similarity_label_vocab.txt"
+    loss_weight: 1.0
+    save_f1_weight: 1.0
+
+# training set.
+batch_size_per_replica: 64
+valid_batch_size: 64
+test_batch_size: 64
+
+seed: 1024
+
+teacher_max_training_epochs: 50
+max_training_epochs: 100
+patience: 10
